@@ -29,12 +29,21 @@ const schema = lls.getOpenAiSchema( {
 console.log( JSON.stringify( schema, null, 4 ) )
 ```
 
+### Fetch Data
+
+```sh
+curl --location 'localhost:4040/getUniversalProfile?address=0xB031363560403179Aac100d51864e27fFF4D7807' \
+--header 'x-api-key: ...'
+```
+
+
 ## Table of Contents
 
 - [Lukso UP API](#lukso-up-api)
   - [Quickstart](#quickstart)
     - [Run Server](#run-server)
     - [Generate OpenAI Schema](#generate-openai-schema)
+    - [Fetch Data](#fetch-data)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Methods](#methods)
