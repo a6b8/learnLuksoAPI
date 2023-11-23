@@ -1,7 +1,6 @@
 import { config } from './data/config.mjs'
 import { printMessages } from './helpers/mixed.mjs'
 import { LSPInteraction } from './services/LSPInteraction.mjs'
-import fetch from 'node-fetch'
 
 
 import express from 'express'
