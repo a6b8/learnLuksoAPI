@@ -1,5 +1,7 @@
+import { LearnLuksoServer } from './src/LearnLuksoServer.mjs'
+
+
 async function main() {
-    const { LearnLuksoServer } = await import( './src/LearnLuksoServer.mjs' )
 
     const learnluksoServer = new LearnLuksoServer()
 

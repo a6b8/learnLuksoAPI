@@ -1,6 +1,8 @@
 import Web3 from 'web3'
 import { ERC725 } from '@erc725/erc725.js';
-import lsp3ProfileSchema from '@erc725/erc725.js/schemas/LSP3ProfileMetadata.json' assert { type: 'json' };
+import fs from 'fs'
+
+const lsp3ProfileSchema = JSON.parse( fs.readFileSync( './node_modules/@erc725/erc725.js/schemas/LSP3ProfileMetadata.json' ) ) 
 import { printMessages, keyPathToValue, objectToKeyPaths } from './../helpers/mixed.mjs'
 
 
@@ -59,7 +61,7 @@ export class LSPInteraction {
 
                         const value = keyPathToValue( { data, keyPath } )
                         if( flatIndex === -1 ) {
-                            !Object.hasOwn( acc, '_additional') ? acc['_additional'] = {} : ''
+                            !acc.hasOwnProperty( '_additional' ) ? acc['_additional'] = {} : ''
                             acc['_additional'][ keyPath ] = value
                         } else {
                             const flat = this.#config['presets'][ presetKey ]['flatten'][ flatIndex ]

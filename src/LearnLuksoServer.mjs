@@ -143,13 +143,15 @@ export class LearnLuksoServer {
 
         keys
             .forEach( key => {
-                if( !Object.hasOwn( this.#state['secrets'], key ) ) {
+                if( !this.#state['secrets'].hasOwnProperty( key ) ) {
                     messages.push( `Key "${key}" is not found in .env` )
                     return true
                 }
-
+console.log( 'HERE')
+console.log( this.#state['secrets'][ key ] )
                 const test = this.#state['secrets'][ key ]
                     .match( this.#config['env']['validation'][ key ]['regex'] )
+console.log( 'AAA' )
                 if( test === null ) {
                     console.log( 'K', key)
                     messages.push( `Env '${key}' not the expected pattern. Use ${this.#config['env']['validation'][ key ]['messages']}` )
@@ -277,7 +279,7 @@ export class LearnLuksoServer {
                         ]
                             .reduce( ( acc, a, index ) => {
                                 const [ key, values ] = a
-                                !Object.hasOwn( acc, key ) ? acc[ key ] = [] : ''
+                                !acc.hasOwnProperty( key ) ? acc[ key ] = [] : ''
                                 values.forEach( value => acc[ key ].push( value ) )
                                 return acc
                             }, {} )
