@@ -50,10 +50,6 @@ curl --location 'localhost:4040/getUniversalProfile?address=0xB031363560403179Aa
     - [init( {} )](#init--)
     - [start()](#start)
     - [getOpenAISchema](#getopenaischema)
-    - [init( {} )](#init---1)
-    - [start()](#start-1)
-    - [getOpenAISchema](#getopenaischema-1)
-  - [Deployment](#deployment)
   - [License](#license)
 
 ## Features
@@ -126,14 +122,6 @@ const schema = lls.getOpenAiSchema( {
 } )
 console.log( JSON.stringify( schema, null, 4 ) )
 ```
-
-### init( {} )
-
-### start()
-
-### getOpenAISchema
-
-## Deployment
 
 ## License
 
