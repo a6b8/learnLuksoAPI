@@ -2,7 +2,6 @@ import { LearnLuksoServer } from './src/LearnLuksoServer.mjs'
 
 
 async function main() {
-
     const learnluksoServer = new LearnLuksoServer()
 
     try {
