@@ -147,11 +147,10 @@ export class LearnLuksoServer {
                     messages.push( `Key "${key}" is not found in .env` )
                     return true
                 }
-console.log( 'HERE')
-console.log( this.#state['secrets'][ key ] )
+
                 const test = this.#state['secrets'][ key ]
                     .match( this.#config['env']['validation'][ key ]['regex'] )
-console.log( 'AAA' )
+
                 if( test === null ) {
                     console.log( 'K', key)
                     messages.push( `Env '${key}' not the expected pattern. Use ${this.#config['env']['validation'][ key ]['messages']}` )
