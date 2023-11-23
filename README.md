@@ -1,6 +1,6 @@
-# Learn Lukso API
+# Lukso UP API
 
-This REST API retrieves data related to Universal Profiles from the Lukso Blockchain and serves as a bridge between the blockchain and an AI system that processes and presents the data in a suitable manner. Additionally, it includes a Schema Generator that describes the API according to the OpenAI standard (Swagger).
+This REST API retrieves data related to `Universal Profiles` from the `Lukso Blockchain` and serves as a bridge between the blockchain and an AI system that processes and presents the data in a suitable manner. Additionally, it includes a Schema Generator that describes the API according to the OpenAI standard (Swagger).
 
 
 ## Quickstart
@@ -31,7 +31,7 @@ console.log( JSON.stringify( schema, null, 4 ) )
 
 ## Table of Contents
 
-- [Learn Lukso API](#learn-lukso-api)
+- [Lukso UP API](#lukso-up-api)
   - [Quickstart](#quickstart)
     - [Run Server](#run-server)
     - [Generate OpenAI Schema](#generate-openai-schema)

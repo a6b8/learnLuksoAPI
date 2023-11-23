@@ -1,5 +1,5 @@
 {
-  "name": "learn-lukso-server",
+  "name": "up-api",
   "version": "0.0.1",
   "description": "This REST API connects the Lukso Blockchain to an AI system for processing and displaying Universal Profiles data. It also includes a Schema Generator following the OpenAI standard (Swagger) to describe the API.",
   "main": "server.js",
