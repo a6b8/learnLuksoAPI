@@ -1,5 +1,5 @@
 import { config } from './data/config.mjs'
-// import { printMessages } from './helpers/mixed.mjs'
+import { printMessages } from './helpers/mixed.mjs'
 
 import express from 'express'
 import fs from 'fs'
@@ -134,7 +134,6 @@ export class LearnLuksoServer {
     #validateSecrets() {
         const messages = []
         const comments = []
- 
         const keys = Object.keys( this.#config['env']['validation'] )
 
         keys
@@ -190,7 +189,7 @@ export class LearnLuksoServer {
 
 
     #addServer() {
-        const port = 8080 // this.#state['secrets']['PORT']
+        const port = this.#state['secrets']['PORT']
         this.#app = express();
         this.#app.listen(
             port, 
