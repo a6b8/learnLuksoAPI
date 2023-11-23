@@ -1,8 +1,9 @@
-import Web3 from 'web3'
 import { ERC725 } from '@erc725/erc725.js';
 import fs from 'fs'
 
-const lsp3ProfileSchema = JSON.parse( fs.readFileSync( './node_modules/@erc725/erc725.js/schemas/LSP3ProfileMetadata.json' ) ) 
+const lsp3ProfileSchema = JSON.parse( 
+    fs.readFileSync( './node_modules/@erc725/erc725.js/schemas/LSP3ProfileMetadata.json' ) 
+) 
 import { printMessages, keyPathToValue, objectToKeyPaths } from './../helpers/mixed.mjs'
 
 

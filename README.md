@@ -83,7 +83,7 @@ return this
 
 **Example**: 
 ```js
-const { LearnLuksoServer } = await import( './src/LearnLuksoServer.mjs' )
+import { LearnLuksoServer } from './src/LearnLuksoServer.mjs'
 const lls = new LearnLuksoServer()
 lls
     .init( { 'environment': 'quickstart', 'version': 'v0.2' } )
@@ -98,7 +98,7 @@ Start the server after settings via .init({}).
 
 **Example**: 
 ```js
-const { LearnLuksoServer } = await import( './src/LearnLuksoServer.mjs' )
+import { LearnLuksoServer } from './src/LearnLuksoServer.mjs'
 const lls = new LearnLuksoServer()
 lls
     .init( { 'environment': 'quickstart', 'version': 'v0.2' } )
@@ -112,7 +112,7 @@ lls
 Generate an OpenAI Schema configuration file for Custom GPT integration.
 
 ```js
-const { LearnLuksoServer } = await import( './src/LearnLuksoServer.mjs' )
+import { LearnLuksoServer } from './src/LearnLuksoServer.mjs'
 const lls = new LearnLuksoServer()
 const schema = lls.getOpenAiSchema( { 
     'title': 'Title',
