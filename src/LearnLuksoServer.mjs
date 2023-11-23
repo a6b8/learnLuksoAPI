@@ -1,5 +1,6 @@
 import { config } from './data/config.mjs'
 import { printMessages } from './helpers/mixed.mjs'
+import { LSPInteraction } from './services/LSPInteraction.mjs'
 
 import express from 'express'
 import fs from 'fs'
@@ -28,11 +29,13 @@ export class LearnLuksoServer {
             'environment': environment,
             'version': version,
             'secrets': {},
-            'privacy': ''
+            'privacy': '',
+            'lspInteraction': null
         }
 
         this.#state['secrets'] = this.#addSecrets()
         const [ m, c ] = this.#validateSecrets()
+        printMessages( { 'messages': m, 'comments': c } )
 
         return this
     }
@@ -141,16 +144,16 @@ export class LearnLuksoServer {
                 if( !Object.hasOwn( this.#state['secrets'], key ) ) {
                     messages.push( `Key "${key}" is not found in .env` )
                     return true
-                } 
+                }
 
                 const test = this.#state['secrets'][ key ]
                     .match( this.#config['env']['validation'][ key ]['regex'] )
                 if( test === null ) {
-                    messages.push( `${this.#config['env']['validation'][ key ]['message']}` )
+                    console.log( 'K', key)
+                    messages.push( `Env '${key}' not the expected pattern. Use ${this.#config['env']['validation'][ key ]['messages']}` )
                     return true
                 }
             } )
-
         return [ messages, comments ]
     }
 
@@ -240,7 +243,63 @@ export class LearnLuksoServer {
             } 
         )
 
-        // Lukso HERE
+        const lsp = new LSPInteraction( this.#config, false )
+        lsp.init( { 'validation': false } )
+
+
+        this.#app.get(
+            '/getUniversalProfile', 
+            addApiKeyHeader,
+            async( req, res ) => {
+                // const { network } = req.params
+
+                try {
+                    const { address } = req.query
+
+                    const network = 'luksoTestnet'
+                    const presetKey = 'LSP3Profile'
+
+                    const [ m, c ] = lsp.validateGetData( { address, network, presetKey } )
+    
+                    if( m.length === 0 ) {
+                        const response = await lsp.getData( { address, network, presetKey } )
+                        console.log( 'response', response )
+                        res.json( { 
+                            'data': response['data'],
+                            'status': response['status']
+                        } )
+                    } else {
+                        const msgs = [ 
+                            [ 'message', m ], 
+                            [ 'comment', c ]
+                        ]
+                            .reduce( ( acc, a, index ) => {
+                                const [ key, values ] = a
+                                !Object.hasOwn( acc, key ) ? acc[ key ] = [] : ''
+                                values.forEach( value => acc[ key ].push( value ) )
+                                return acc
+                            }, {} )
+    
+                        res.json( { 
+                            'data': {},
+                            'status': {
+                                'code': 400,
+                                'msgs': msgs
+                            } 
+                        } )
+                    }
+                } catch( e ) {
+                    console.log( e )
+                    res.json( { 
+                        'data': {},
+                        'status': {
+                            'code': 400,
+                            'text': e
+                        } 
+                    } )
+                }
+            } 
+        )
 
         this.#app.get(
             '/privacy', 

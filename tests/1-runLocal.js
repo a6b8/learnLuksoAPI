@@ -12,7 +12,7 @@ async function main() {
             } )
             .start()
     } catch( e ) {
-        console.log( `Error: ${e}` )
+        console.log( `Error ${e}` )
     }
 
     return true
