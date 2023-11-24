@@ -1,11 +1,11 @@
 async function main() {
-    const { LearnLuksoServer } = await import( '../src/LearnLuksoServer.mjs' )
-    const learnluksoServer = new LearnLuksoServer()
+    const { UpApi } = await import( '../src/UpApi.mjs' )
+    const upApi = new UpApi()
 
     try {
         const version = 'v0.1'
         console.log( `Start server! Version: ${version}` )
-        learnluksoServer
+        upApi
             .init( { 
                 'environment': 'development', 
                 version

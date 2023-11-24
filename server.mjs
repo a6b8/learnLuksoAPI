@@ -1,13 +1,13 @@
-import { LearnLuksoServer } from './src/LearnLuksoServer.mjs'
+import { UpApi } from './src/UpApi.mjs'
 
 
 async function main() {
-    const learnluksoServer = new LearnLuksoServer()
+    const upApi = new UpApi()
 
     try {
         const version = 'v0.3'
         console.log( `Start server! Version: ${version}` )
-        learnluksoServer
+        upApi
             .init( { 
                 'environment': 'staging', 
                 version

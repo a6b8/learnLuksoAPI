@@ -1,4 +1,4 @@
-# Lukso UP API
+# UP API
 
 This REST API retrieves data related to `Universal Profiles` from the `Lukso Blockchain` and serves as a bridge between the blockchain and an AI system that processes and presents the data in a suitable manner. Additionally, it includes a Schema Generator that describes the API according to the OpenAI standard (Swagger).
 
@@ -8,9 +8,9 @@ This REST API retrieves data related to `Universal Profiles` from the `Lukso Blo
 ### Run Server
 
 ```js
-import { LearnLuksoServer } from './src/LearnLuksoServer.mjs'
-const lls = new LearnLuksoServer()
-lls
+import { UpApi } from './src/UpApi.mjs'
+const upApi = new UpApi()
+upApi
     .init( { 'environment': 'quickstart' } )
     .start()
 ```
@@ -18,9 +18,9 @@ lls
 ### Generate OpenAI Schema
 
 ```js
-import { LearnLuksoServer } from './src/LearnLuksoServer.mjs'
-const lls = new LearnLuksoServer()
-const schema = lls.getOpenAiSchema( { 
+import { UpApi } from './src/UpApi.mjs'
+const upApi = new UpApi()
+const schema = upApi.getOpenAiSchema( { 
     'title': 'My Title',
     'description': `My description`,
     'version': 'v0.0.2',
@@ -39,7 +39,7 @@ curl --location 'localhost:4040/getUniversalProfile?address=0xB031363560403179Aa
 
 ## Table of Contents
 
-- [Lukso UP API](#lukso-up-api)
+- [UP API](#up-api)
   - [Quickstart](#quickstart)
     - [Run Server](#run-server)
     - [Generate OpenAI Schema](#generate-openai-schema)
@@ -83,9 +83,9 @@ return this
 
 **Example**: 
 ```js
-import { LearnLuksoServer } from './src/LearnLuksoServer.mjs'
-const lls = new LearnLuksoServer()
-lls
+import { UpApi } from './src/UpApi.mjs'
+const upApi = new UpApi()
+upApi
     .init( { 'environment': 'quickstart', 'version': 'v0.2' } )
     .start()
 
@@ -98,9 +98,9 @@ Start the server after settings via .init({}).
 
 **Example**: 
 ```js
-import { LearnLuksoServer } from './src/LearnLuksoServer.mjs'
-const lls = new LearnLuksoServer()
-lls
+import { UpApi } from './src/UpApi.mjs'
+const upApi = new UpApi()
+upApi
     .init( { 'environment': 'quickstart', 'version': 'v0.2' } )
     .start()
 
@@ -112,9 +112,9 @@ lls
 Generate an OpenAI Schema configuration file for Custom GPT integration.
 
 ```js
-import { LearnLuksoServer } from './src/LearnLuksoServer.mjs'
-const lls = new LearnLuksoServer()
-const schema = lls.getOpenAiSchema( { 
+import { UpApi } from './src/UpApi.mjs'
+const upApi = new UpApi()
+const schema = upApi.getOpenAiSchema( { 
     'title': 'Title',
     'description': `Description`,
     'version': '',

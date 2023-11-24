@@ -9,7 +9,7 @@ import path from 'path'
 // import moment from 'moment'
 
 
-export class LearnLuksoServer {
+export class UpApi {
     #config
     #app
     #silent
@@ -77,8 +77,28 @@ export class LearnLuksoServer {
                 return acc
             }, {} )
         
-        struct['servers']
-            .push( { url } )
+        struct['servers'].push( { url } )
+
+        struct['paths'] = {
+            '/getUniversalProfile': {
+                'get': {
+                    'description': 'Retrieve Information which are stored on the universal profile.',
+                    'operationId': 'getUniversalProfile',
+                    'parameters': [
+                        {
+                            'name': 'address',
+                            'in': 'query',
+                            'description': "Set the lukso blockchain evm-compatible public key/address. Allowed is a string which starts with a '0x' prefix followed by exactly 40 hexadecimal characters",
+                            'schema': {
+                                'type': 'string',
+                                'pattern': '^0x[a-fA-F0-9]{40}$'
+                            }
+                        }
+                    ],
+                    "deprecated": false
+                }
+            }
+        }
 
         return struct
     }

@@ -48,6 +48,10 @@ const config = {
         'ethereumAddress': {
             'regex': /^0x[a-fA-F0-9]{40}$/,
             'description': "Allowed is a string which starts with a '0x' prefix followed by exactly 40 hexadecimal characters"
+        },
+        'ipfsURL': {
+            'regex': /^ipfs:\/\/[a-zA-Z0-9]{46}$/,
+            'description': 'Find ipfs links.'
         }
     },
     'presets': {
@@ -60,7 +64,23 @@ const config = {
                 [ 'LSP3Profile__tags', 'tags' ],
                 [ 'LSP3Profile__profileImage', 'profileImage' ],
                 [ 'LSP3Profile__backgroundImage', 'backgroundImage' ]
-            ]
+            ],
+            'modifier': {
+                'pattern': '{{tree__validations__ipfsURL__regex}}',
+                'steps': [ 
+                    {
+                        'cmd': 'replace',
+                        'from': 'ipfs://',
+                        'to': ''
+                    },
+                    {
+                        'cmd': 'struct',
+                        'self': '{{self}}',
+                        'to': '{{tree__ipfs__gateways__up}}/{{self}}'
+                    }
+                    
+                ]
+            }
         }
     }
 } 

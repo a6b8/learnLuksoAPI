@@ -1,5 +1,5 @@
-import { LSPInteraction } from './../src/services/LSPInteraction.mjs'
-import { config } from './../src/data/config.mjs'
+import { LSPInteraction } from '../src/services/LSPInteraction.mjs'
+import { config } from '../src/data/config.mjs'
 
 const lsp = new LSPInteraction( config )
 lsp.init()

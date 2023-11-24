@@ -5,6 +5,8 @@ const lsp3ProfileSchema = JSON.parse(
     fs.readFileSync( './node_modules/@erc725/erc725.js/schemas/LSP3ProfileMetadata.json' ) 
 ) 
 import { printMessages, keyPathToValue, objectToKeyPaths } from './../helpers/mixed.mjs'
+import { ValueModifier } from './../helpers/ValueModifier.mjs'
+
 
 
 export class LSPInteraction {
@@ -48,7 +50,7 @@ export class LSPInteraction {
         }
 
         let error = false
-        const result = response['data']
+        const flatten = response['data']
             .filter( a => a['name'] === this.#config['presets'][ presetKey ]['filter'] )
             .map( a  => {
                 const data = a['value']
@@ -73,10 +75,90 @@ export class LSPInteraction {
 
                 return result
             } )
-
         if( error ) { console.log( 'Error: Flattening raised errors.' ) }
 
-        return result 
+        const mod = new ValueModifier( this.#config )
+        const modifiedTxt = JSON
+            .stringify( flatten )
+            .replace(
+                /ipfs:\/\/[a-zA-Z0-9]{46}/ig,
+                ( match ) => {
+                    return mod.start( {
+                        'value': match,
+                        'modifier': this.#config['presets'][ presetKey ]['modifier']
+                    } )['value']
+                }
+            )
+        const modified = JSON.parse( modifiedTxt )
+        return modified
+    }
+
+
+    #findModSelectors( { value } ) {
+        const test = value
+            .match( /{{([^{}]+)}}/ )
+    
+        if( test === null ) {
+            console.log( 'null' )
+            return []
+        } 
+    
+        const r = value
+            .match( /{{([^{}]+)}}/ )
+            .reduce( ( acc, a, index ) => {
+                const path = a
+                    .replac( '{{', '' )
+                    .replace( '}}', '' )
+    
+                const result = {
+                    'from': null,
+                    'to': null
+                }
+    
+                if( a.startsWith( 'tree__' ) ) {
+                    const keyPath = path
+                        .replace( 'tree__', '' )
+                    result['to'] = keyPathToValue( { 
+                        'data': this.#config, 
+                        keyPath 
+                    } )
+                } else if( a.startsWith( 'self' ) ) {
+                    result['to'] = value
+                } else {
+                    console.log( `An error occured. ${a} unknown.` )
+                }
+    
+                return acc
+            }, [] )
+    
+        return r
+    }
+
+
+    #modifyValue( { value, presetKey } ) {
+        value = `${value}`
+        this.#config['presets'][ presetKey ]['mods']
+            .forEach( mod => {
+                const cmd = mod[ 0 ]
+                switch( cmd ) {
+                    case 'pattern':
+                        const selectors = this.#findModSelectors( { 
+                            'value': a[ 1 ]
+                        } )
+
+                        console.log( 'SEl', selectors )
+
+                        break
+                    case 'replace':
+                        break
+                    default:
+                        console.log( `'mod' with key 'cmd' not found.` )
+                        break
+                }
+
+            } )
+
+        return value
     }
 
 
@@ -116,13 +198,7 @@ export class LSPInteraction {
     validateGetData( { address, network, presetKey } ) {
         const messages = []
         const comments = []
-/*
-        if( !Array.isArray( filter ) ) {
-            messages.push( `Key 'filter' is not type of 'array'.` )            
-        } else if( !filter.map( a => typeof a === 'string' ).every( a => a ) ) { 
-            messages.push( `Key 'filter' not all values are type of 'string' in array.` )
-        }
-*/
+
         if( presetKey === undefined ) {
             comments.push( `Key 'presetKey' is not set, response is in raw format.` ) 
         } else if( typeof presetKey !== 'string' ) {
